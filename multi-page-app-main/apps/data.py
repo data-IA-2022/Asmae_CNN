@@ -1,0 +1,30 @@
+import streamlit as st
+import streamlit as st
+from PIL import Image
+
+def app():
+    image=Image.open("/content/drive/MyDrive/multi-page-app-main/apps/model.png")
+    st.title(":school: Model Explanation")
+    st.write("This is an educational page which explains input, preprocessing and model architecture in detail.")
+    st.header("Input")
+    st.write("The model expects input images with the shape (180, 180, 3), representing images with height 180, width 180, and 3 color channels (RGB).")
+    st.header("Preprocessing")
+    st.write("The input images are rescaled by dividing each pixel value by 255 to normalize them in the range [0, 1].")
+    st.header("Model Architecture")
+    st.write("The model starts with a convolutional layer with 32 filters, a kernel size of 3x3, and a stride of 2. The output has the same spatial dimensions as the input due to same padding.")
+    st.write("Batch normalization and ReLU activation are applied to the output of the previous layer.")
+    st.write("Another convolutional layer with 64 filters and same padding is added, followed by batch normalization and ReLU activation.")
+    st.write("The current activation values are stored in previous_block_activation for later use in residual connections.")
+    st.write("The model then iterates through a loop where it builds a series of residual blocks with increasing numbers of filters: 128, 256, 512, and 728.")
+    st.write("Within each iteration, the block consists of two sets of a convolutional layer, batch normalization, and ReLU activation.")
+    st.write("Max pooling with a pool size of 3x3 and stride of 2 is applied to reduce the spatial dimensions of the feature maps.")
+    st.write("A 1x1 convolutional layer is applied to the previous_block_activation tensor to match the number of filters in the current block. The result is added back to the current activation values (x) using element-wise addition.")
+    st.write("The updated activation values are stored in previous_block_activation for the next iteration.")
+    st.write("After the residual blocks, a convolutional layer with 1024 filters and same padding is applied, followed by batch normalization and ReLU activation.")
+    st.write("Global average pooling is performed to reduce the spatial dimensions of the feature maps to a 1D vector.")
+    st.write("Depending on the num_classes parameter:")
+    st.write("If num_classes equals 2, the final activation function is set to sigmoid and the output layer consists of a single unit for binary classification.")
+    st.write("Otherwise, if num_classes is greater than 2, the final activation function is set to softmax and the output layer consists of num_classes units for multiclass classification.")
+    st.write("A dropout layer with a rate of 0.5 is applied to prevent overfitting.")
+    st.write("Finally, a dense layer with the specified number of units and activation function is added as the output layer.")
+    st.image(image,caption='Model block diagram')
